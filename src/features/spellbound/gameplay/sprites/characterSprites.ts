@@ -174,12 +174,74 @@ const owl: GameplaySpriteDefinition = {
   ],
 };
 
+const capybara: GameplaySpriteDefinition = {
+  characterId: "calm-capybara-mage",
+  legColumns: [5, 9],
+  palette: {
+    o: "#3b241d",
+    b: "#a96848",
+    l: "#d99a63",
+    a: "#477143",
+    c: "#9bcf55",
+    e: "#2a1730",
+    m: "#f6d36b",
+    n: "#5b3025",
+  },
+  grid: [
+    "..oo......oo....",
+    ".obbo....obbo...",
+    ".obbbbbbbbbbo...",
+    ".obbbbbbbbbbo...",
+    "oobebbbbbbbebo..",
+    ".obbbbbbbbbbo...",
+    ".obbllnllllbo...",
+    "..obllllllbo....",
+    "...oaaaaaaaao...",
+    "..oaacaaaacaa...",
+    ".oaaalllllaaao..",
+    "..oaaaaaaaaao...",
+    "...ooooooooo....",
+  ],
+};
+
+const axolotl: GameplaySpriteDefinition = {
+  characterId: "axolotl-mage",
+  legColumns: [5, 9],
+  palette: {
+    o: "#3b1d4f",
+    b: "#f18bb8",
+    l: "#ffd2e8",
+    a: "#7a6bd1",
+    c: "#9eeaff",
+    e: "#25163d",
+    m: "#b8f5ff",
+    n: "#c95b8d",
+  },
+  grid: [
+    "..oc....co.....",
+    ".ocb....bco....",
+    "..obooooob.....",
+    ".obbbbbbbbbbo...",
+    ".obebbbbbbbebo..",
+    "obbbbbblbbbbbo..",
+    ".obbllnllllbo...",
+    "..obllllllbo....",
+    "...oaaaaaaaao...",
+    "..oaacaaaacaa...",
+    ".oaaalllllaaao..",
+    "..oaaaaaaaaao...",
+    "...ooooooooo....",
+  ],
+};
+
 export const gameplaySprites: Partial<Record<PlayableCharacterId, GameplaySpriteDefinition>> = {
   "white-fox-ice-mage": fox,
   "purple-rabbit-ninja": rabbit,
   "swamp-frog-mage": frog,
   "forge-raccoon-mage": raccoon,
   "time-owl-mage": owl,
+  "calm-capybara-mage": capybara,
+  "axolotl-mage": axolotl,
 };
 
 export function getGameplaySprite(id: PlayableCharacterId) {
