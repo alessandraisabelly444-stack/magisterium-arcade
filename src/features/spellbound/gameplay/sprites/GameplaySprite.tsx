@@ -1,6 +1,20 @@
 import { useMemo } from "react";
 
 import axolotlSprite from "@/assets/characters/axolotl.png";
+import capybaraDefeat from "@/assets/characters/capybara/defeat.png";
+import capybaraHurt from "@/assets/characters/capybara/hurt.png";
+import capybaraIdle from "@/assets/characters/capybara/idle.png";
+import capybaraJump from "@/assets/characters/capybara/jump.png";
+import capybaraRun from "@/assets/characters/capybara/run.png";
+import capybaraVictory from "@/assets/characters/capybara/victory.png";
+import capybaraWalk from "@/assets/characters/capybara/walk.png";
+import axolotlDefeat from "@/assets/characters/axolotl/defeat.png";
+import axolotlHurt from "@/assets/characters/axolotl/hurt.png";
+import axolotlIdle from "@/assets/characters/axolotl/idle.png";
+import axolotlJump from "@/assets/characters/axolotl/jump.png";
+import axolotlRun from "@/assets/characters/axolotl/run.png";
+import axolotlVictory from "@/assets/characters/axolotl/victory.png";
+import axolotlWalk from "@/assets/characters/axolotl/walk.png";
 import capybaraSprite from "@/assets/characters/capybara.png";
 
 import type { PlayableCharacterId } from "../../types";
@@ -24,6 +38,29 @@ interface GameplaySpriteProps {
 
 const GRID = 16;
 const FOOT_BASE_Y = 16;
+
+const illustratedFrames: Partial<Record<PlayableCharacterId, Partial<Record<AnimationState, string>>>> = {
+  "calm-capybara-mage": {
+    idle: capybaraIdle,
+    walk: capybaraWalk,
+    run: capybaraRun,
+    jump: capybaraJump,
+    hurt: capybaraHurt,
+    victory: capybaraVictory,
+    defeat: capybaraDefeat,
+    ability: capybaraIdle,
+  },
+  "axolotl-mage": {
+    idle: axolotlIdle,
+    walk: axolotlWalk,
+    run: axolotlRun,
+    jump: axolotlJump,
+    hurt: axolotlHurt,
+    victory: axolotlVictory,
+    defeat: axolotlDefeat,
+    ability: axolotlIdle,
+  },
+};
 
 function legOffsets(pose: LegPose): [number, number, number, number] {
   // [leftDx, rightDx, leftHeight, rightHeight]
@@ -82,12 +119,8 @@ export function GameplaySprite({
     { x: rx + rdx, h: rh },
   ];
 
-  const illustratedImage =
-    characterId === "calm-capybara-mage"
-      ? capybaraSprite
-      : characterId === "axolotl-mage"
-        ? axolotlSprite
-        : null;
+  const characterFrames = illustratedFrames[characterId];
+  const illustratedImage = characterFrames?.[animation] ?? characterFrames?.idle ?? null;
 
   if (illustratedImage) {
     const motionScale = size / GRID;
