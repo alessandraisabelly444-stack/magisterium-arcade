@@ -74,7 +74,8 @@ export const playableCharacterSeeds: PlayableCharacterSeed[] = [
     dominantColor: "Canela / Azul / Ciano",
     badgeClassName: "bg-spell-time",
     sprite: capybaraSprite,
-    coinCost: 1000,
+    // Temporariamente gratuito para testes de seleção e gameplay.
+    coinCost: 0,
   },
   {
     id: "axolotl-mage",
@@ -86,7 +87,8 @@ export const playableCharacterSeeds: PlayableCharacterSeed[] = [
     dominantColor: "Rosa / Azul / Roxo",
     badgeClassName: "bg-spell-time",
     sprite: axolotlSprite,
-    coinCost: 1000,
+    // Temporariamente gratuito para testes de seleção e gameplay.
+    coinCost: 0,
   },
 ];
 
