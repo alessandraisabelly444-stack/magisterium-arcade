@@ -82,6 +82,42 @@ export function GameplaySprite({
     { x: rx + rdx, h: rh },
   ];
 
+  const illustratedImage =
+    characterId === "calm-capybara-mage"
+      ? capybaraSprite
+      : characterId === "axolotl-mage"
+        ? axolotlSprite
+        : null;
+
+  if (illustratedImage) {
+    const motionScale = size / GRID;
+    const illustratedTransform = [
+      `translate(${(frame.dx ?? 0) * motionScale}px ${(frame.dy ?? 0) * motionScale}px)`,
+      `rotate(${frame.rotate ?? 0}deg)`,
+      `scale(${shouldFlipX ? -(frame.scaleX ?? 1) : frame.scaleX ?? 1} ${frame.scaleY ?? 1})`,
+    ].join(" ");
+
+    return (
+      <img
+        src={illustratedImage}
+        alt={characterId}
+        width={size}
+        height={size}
+        className={className}
+        style={{
+          imageRendering: "pixelated",
+          objectFit: "contain",
+          overflow: "visible",
+          transform: illustratedTransform,
+          transformOrigin: "center bottom",
+          filter: frame.eyes === "hurt" ? "brightness(1.18) saturate(0.82)" : undefined,
+        }}
+        role="img"
+        aria-label={`${characterId} ${animation}`}
+      />
+    );
+  }
+
   const scaleY = frame.scaleY ?? 1;
   const footPixelLegs = legs.map((leg) => ({ x: leg.x, height: leg.h }));
   const footCorrection = footAnchored
