@@ -20,6 +20,8 @@ export type EyePose = "open" | "closed" | "hurt" | "happy";
 
 /** A single frame: a pose applied on top of the character's base pixel grid. */
 export interface SpriteFrame {
+  /** Column in a character sprite sheet, when the renderer uses one. */
+  sheetFrame?: number;
   dx?: number;
   dy?: number;
   scaleX?: number;

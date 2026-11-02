@@ -2,8 +2,8 @@ import { useMemo } from "react";
 
 import axolotlSprite from "@/assets/characters/axolotl.png";
 import capybaraSprite from "@/assets/characters/capybara.png";
-import axolotlReferenceSprite from "@/assets/characters/reference/axolotl.png";
-import capybaraReferenceSprite from "@/assets/characters/reference/capybara.png";
+import axolotlSpriteSheet from "@/assets/characters/reference/axolotl-sheet.png";
+import capybaraSpriteSheet from "@/assets/characters/reference/capybara-sheet.png";
 
 import type { PlayableCharacterId } from "../../types";
 import { getAnimation, getGameplaySprite } from "./characterSprites";
@@ -27,9 +27,19 @@ interface GameplaySpriteProps {
 const GRID = 16;
 const FOOT_BASE_Y = 16;
 
-const referenceSprites: Partial<Record<PlayableCharacterId, string>> = {
-  "calm-capybara-mage": capybaraReferenceSprite,
-  "axolotl-mage": axolotlReferenceSprite,
+const spriteSheets: Partial<Record<PlayableCharacterId, string>> = {
+  "calm-capybara-mage": capybaraSpriteSheet,
+  "axolotl-mage": axolotlSpriteSheet,
+};
+
+const sheetRows: Partial<Record<AnimationState, number>> = {
+  idle: 0,
+  walk: 1,
+  run: 2,
+  jump: 3,
+  hurt: 4,
+  victory: 5,
+  defeat: 6,
 };
 
 function legOffsets(pose: LegPose): [number, number, number, number] {
@@ -71,31 +81,34 @@ export function GameplaySprite({
   const anim = useMemo(() => getAnimation(characterId, animation), [characterId, animation]);
   const frame = useSpriteAnimation(anim) ?? {};
   const eyes = frame.eyes ?? "open";
-  const referenceSprite = referenceSprites[characterId];
+  const spriteSheet = spriteSheets[characterId];
 
-  if (referenceSprite) {
+  if (spriteSheet) {
     const referenceFilter =
       animation === "hurt"
         ? "brightness(1.22)"
         : animation === "defeat"
           ? "grayscale(0.65) brightness(0.78)"
           : undefined;
+    const row = sheetRows[animation] ?? 0;
+    const column = frame.sheetFrame ?? 0;
     return (
-      <img
-        src={referenceSprite}
-        alt={characterId}
-        width={size}
-        height={size}
+      <div
+        role="img"
+        aria-label={`${characterId} ${animation} frame ${column + 1}`}
         className={className}
         style={{
+          width: size,
+          height: size,
+          backgroundImage: `url(${spriteSheet})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: `${size * 4}px ${size * 7}px`,
+          backgroundPosition: `-${column * size}px -${row * size}px`,
           imageRendering: "pixelated",
-          objectFit: "contain",
           transform: shouldFlipX ? "scaleX(-1)" : undefined,
           filter: referenceFilter,
           overflow: "visible",
         }}
-        role="img"
-        aria-label={`${characterId} ${animation}`}
       />
     );
   }
