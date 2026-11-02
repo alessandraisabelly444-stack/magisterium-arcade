@@ -2,6 +2,8 @@ import { useMemo } from "react";
 
 import axolotlSprite from "@/assets/characters/axolotl.png";
 import capybaraSprite from "@/assets/characters/capybara.png";
+import axolotlReferenceSprite from "@/assets/characters/reference/axolotl.png";
+import capybaraReferenceSprite from "@/assets/characters/reference/capybara.png";
 
 import type { PlayableCharacterId } from "../../types";
 import { getAnimation, getGameplaySprite } from "./characterSprites";
@@ -24,6 +26,11 @@ interface GameplaySpriteProps {
 
 const GRID = 16;
 const FOOT_BASE_Y = 16;
+
+const referenceSprites: Partial<Record<PlayableCharacterId, string>> = {
+  "calm-capybara-mage": capybaraReferenceSprite,
+  "axolotl-mage": axolotlReferenceSprite,
+};
 
 function legOffsets(pose: LegPose): [number, number, number, number] {
   // [leftDx, rightDx, leftHeight, rightHeight]
@@ -64,6 +71,34 @@ export function GameplaySprite({
   const anim = useMemo(() => getAnimation(characterId, animation), [characterId, animation]);
   const frame = useSpriteAnimation(anim) ?? {};
   const eyes = frame.eyes ?? "open";
+  const referenceSprite = referenceSprites[characterId];
+
+  if (referenceSprite) {
+    const referenceFilter =
+      animation === "hurt"
+        ? "brightness(1.22)"
+        : animation === "defeat"
+          ? "grayscale(0.65) brightness(0.78)"
+          : undefined;
+    return (
+      <img
+        src={referenceSprite}
+        alt={characterId}
+        width={size}
+        height={size}
+        className={className}
+        style={{
+          imageRendering: "pixelated",
+          objectFit: "contain",
+          transform: shouldFlipX ? "scaleX(-1)" : undefined,
+          filter: referenceFilter,
+          overflow: "visible",
+        }}
+        role="img"
+        aria-label={`${characterId} ${animation}`}
+      />
+    );
+  }
 
   const bodyPixels = useMemo(() => {
     const out: { x: number; y: number; key: PaletteKey }[] = [];
