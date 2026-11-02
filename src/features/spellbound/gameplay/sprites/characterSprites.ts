@@ -246,6 +246,79 @@ const stableMageAnimations: AnimationSet = {
   },
 };
 
+// Reference-style animation set: every frame keeps the same 16x14 canvas,
+// scale, anchor and outline. Only legs, eyes and effects change between poses.
+const referenceAnimalAnimations: AnimationSet = {
+  idle: {
+    fps: 3,
+    loop: true,
+    frames: [
+      { legs: "stand" },
+      { legs: "stand" },
+      { legs: "stand", eyes: "closed" },
+      { legs: "stand" },
+    ],
+  },
+  walk: {
+    fps: 6,
+    loop: true,
+    frames: [
+      { legs: "stepA" },
+      { legs: "stand" },
+      { legs: "stepB" },
+      { legs: "stand" },
+    ],
+  },
+  run: {
+    fps: 12,
+    loop: true,
+    frames: [
+      { legs: "stepA" },
+      { legs: "spread" },
+      { legs: "stepB" },
+      { legs: "tuck" },
+    ],
+  },
+  jump: {
+    fps: 8,
+    loop: true,
+    frames: [
+      { legs: "down" },
+      { legs: "tuck" },
+      { legs: "spread" },
+      { legs: "down" },
+    ],
+  },
+  hurt: {
+    fps: 10,
+    loop: true,
+    frames: [
+      { legs: "spread", eyes: "hurt", fx: "flash" },
+      { legs: "stand", eyes: "hurt" },
+      { legs: "spread", eyes: "hurt" },
+    ],
+  },
+  victory: {
+    fps: 6,
+    loop: true,
+    frames: [
+      { legs: "down", eyes: "happy", fx: "sparkle" },
+      { legs: "tuck", eyes: "happy", fx: "sparkle" },
+      { legs: "stand", eyes: "happy", fx: "sparkle" },
+    ],
+  },
+  defeat: {
+    fps: 4,
+    loop: false,
+    frames: [
+      { legs: "stand", eyes: "hurt" },
+      { legs: "spread", eyes: "hurt" },
+      { legs: "spread", eyes: "closed", fx: "stars" },
+      { legs: "spread", eyes: "closed", fx: "stars" },
+    ],
+  },
+};
+
 const capybara: GameplaySpriteDefinition = {
   characterId: "calm-capybara-mage",
   legColumns: [5, 9],
@@ -260,22 +333,22 @@ const capybara: GameplaySpriteDefinition = {
     n: "#8f563b",
   },
   grid: [
-    ".....o..o.......",
-    "....ob..bo......",
-    "...obbbbbbo.....",
-    "..obbbbbbbbo....",
-    ".obebbbbbebbo...",
-    ".obbbllllbbbo...",
-    "..obllllllbo....",
-    "...oobllboo.....",
-    "...oaaaaaaao....",
-    "..oaacccaaao....",
-    "..oaaaaaaaaao...",
-    "...oaaaaaaao....",
-    "...oo..oo.......",
-    "..oo....oo......",
+    "....o....o......",
+    "...ob....bo.....",
+    "..obb...bbbo....",
+    "..obbbbbbo.o....",
+    ".obbbbbbbbo.o...",
+    ".obbbebbbebboo..",
+    "..obbbllllboo...",
+    "...obbbbbboo....",
+    "...oaaaaaao.....",
+    "..o.aallaao.....",
+    "..o.aaaaaao.....",
+    "...oaaccaao.....",
+    "....ooo..o......",
+    "....oo...oo.....",
   ],
-  animations: stableMageAnimations,
+  animations: referenceAnimalAnimations,
 };
 
 const axolotl: GameplaySpriteDefinition = {
@@ -292,22 +365,22 @@ const axolotl: GameplaySpriteDefinition = {
     n: "#b44ac0",
   },
   grid: [
-    "......o..o......",
-    ".....obbbbo.....",
-    "....obbbbbbo....",
-    "...ocbbbbco.....",
-    "..ocbebebcoc....",
-    ".ocbbbbbbbbco...",
-    ".ocbbllllbbco...",
-    "..ocllllllc.....",
-    "...oaaaaaaaao...",
-    "..oaacccaaao....",
-    "..oaaaaaaaaao...",
-    "...oaaaaaaao....",
-    "...oo..oo.......",
-    "..oo....oo......",
+    "...cc.o..o..cc..",
+    "..c..obbbb.c....",
+    ".cc.obbbebbocc..",
+    ".c.obbbbbbo.c...",
+    "c.obbbbbbbbo.c..",
+    ".c.obbbllbbbc...",
+    "..obbbbbbbboc...",
+    "...oaaaaaao.....",
+    "..o.aallaao.....",
+    "..o.aaaaaao.....",
+    "...oaaccaao.....",
+    "....oaaaao......",
+    "....oo....oo....",
+    ".....oo..oo.....",
   ],
-  animations: stableMageAnimations,
+  animations: referenceAnimalAnimations,
 };
 
 export const gameplaySprites: Partial<Record<PlayableCharacterId, GameplaySpriteDefinition>> = {
